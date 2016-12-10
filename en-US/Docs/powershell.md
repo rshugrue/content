@@ -35,7 +35,8 @@ Make sure to follow these steps to correctly configure your device running Windo
 
 4. You may need to start the WinRM service on your desktop to enable remote connections. To do so, from the PowerShell console, type the following command:
 
-        net start WinRM
+        Get-Service WinRM  ## To check if it is running or not.
+	Start-Service WinRM  ## To start the service if needed.
 
 5. From the PowerShell console, type the following, substituting `<machine-name or IP address>` with the appropriate value (using your **machine-name** is the easiest, but if your device is not uniquely named on your network, try the IP address):
 
@@ -73,7 +74,7 @@ Make sure to follow these steps to correctly configure your device running Windo
 
 	a. Replace `[new password]` with a strong password:
 	
-	        net user Administrator [new password]
+	        ([adsi]("WinNT://" + ([Environment]::MachineName) + "/Administrator")).SetPassword([new password])
 	        
 	b. Next, establish a new PowerShell session using `Exit-PSSession` and `Enter-PSSession` with the new credentials.
 	```
